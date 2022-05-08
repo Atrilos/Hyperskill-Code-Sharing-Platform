@@ -1,0 +1,9 @@
+#load_date {
+    color:green;
+    font-size:20px;
+}
+#code_snippet {
+    border: thick hidden #32a1ce;
+    background-color:#DCECE7;
+    width: 40%;
+}
