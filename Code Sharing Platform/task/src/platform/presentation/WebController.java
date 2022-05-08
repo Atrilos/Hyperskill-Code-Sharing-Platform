@@ -20,7 +20,7 @@ public class WebController {
     }
 
     @GetMapping(value = "/code/{id}", produces = MediaType.TEXT_HTML_VALUE)
-    public String codeHtml(Model model, @PathVariable long id) {
+    public String codeHtml(Model model, @PathVariable String id) {
         Snippet snippet = snippetService.getSnippetById(id);
         model.addAttribute("snippet", snippet);
         return "code";

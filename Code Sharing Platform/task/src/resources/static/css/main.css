@@ -3,7 +3,11 @@
     font-size:20px;
 }
 #code_snippet {
-    border: thick hidden #32a1ce;
-    background-color:#DCECE7;
+    border: thin solid #32a1ce;
+    height: 40px;
+    margin: 0;
+    line-height: initial;
+    padding: 0 0 0 15px;
+    color: #333;
     width: 40%;
 }

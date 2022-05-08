@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SnippetRepository extends CrudRepository<Snippet, Long> {
+public interface SnippetRepository extends CrudRepository<Snippet, String> {
 
-    Optional<Snippet> findSnippetById(Long id);
-    List<Snippet> findFirst10ByOrderByDateDesc();
+    Optional<Snippet> findSnippetById(String id);
+    List<Snippet> findAll();
 }

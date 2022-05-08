@@ -1,42 +1,51 @@
 package platform.business.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Setter
 @Getter
 @NoArgsConstructor
 public class Snippet {
 
     @Id
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @Column(name = "id", updatable = false, nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String id;
 
     @NotBlank
     @Lob
     @Column(name = "code")
     private String code;
 
-    @CreationTimestamp
-    private LocalDateTime date;
+    private String date;
 
-    public Snippet(String code) {
+    @Column(name = "time", columnDefinition = "integer default 0")
+    private int time = 0;
+
+    @Column(name = "views", columnDefinition = "integer default 0")
+    private int views = 0;
+
+    @Column(columnDefinition = "boolean default false")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private boolean isTimeRestricted = false;
+
+    @Column(columnDefinition = "boolean default false")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private boolean isViewRestricted = false;
+
+    public Snippet(String code, int time, int views) {
         this.code = code;
+        this.time = time;
+        this.views = views;
     }
 }

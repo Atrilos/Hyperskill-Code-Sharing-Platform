@@ -2,6 +2,7 @@ package platform.presentation;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import platform.business.DTO.SnippetDto;
 import platform.business.entity.Snippet;
 import platform.business.service.SnippetService;
 import reactor.core.publisher.Mono;
@@ -19,10 +20,11 @@ public class MainController {
     }
 
     @GetMapping("/code/{id}")
-    public Mono<ResponseEntity<?>> codeJson(@PathVariable Long id) {
+    public Mono<ResponseEntity<SnippetDto>> codeJson(@PathVariable String id) {
+        var foundSnippet = snippetService.getSnippetById(id);
         return Mono.just(ResponseEntity.ok()
                 .header("Content-Type", "application/json")
-                .body(snippetService.getSnippetById(id)));
+                .body(new SnippetDto(foundSnippet)));
     }
 
     @GetMapping("code/latest")
@@ -34,7 +36,7 @@ public class MainController {
 
     @PostMapping("/code/new")
     public Mono<ResponseEntity<?>> newSnippet(@RequestBody Snippet snippet) {
-        String id = String.valueOf(snippetService.save(snippet));
+        String id = snippetService.save(snippet);
         return Mono.just(ResponseEntity.ok()
                 .header("Content-Type", "application/json")
                 .body(Map.of("id", id)));
